@@ -12,6 +12,8 @@ import ManageDoctor from './Doctor/ManageDoctor';
 import Department from './Department/Department';
 import ManageDepartment from './Department/ManageDepartment';
 
+import Appointment from './Appointment/Appointment';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,7 +30,9 @@ root.render(
         <Route path="/Doctor" element={<Doctor />}></Route>  
         <Route path="/Doctor/Add" element={<ManageDoctor />}></Route>
         <Route path="/Doctor/edit/:id" element={<ManageDoctor />}></Route>
-                
+
+          {/* Appointment Route */}
+          <Route path="/Appointment" element={<Appointment />}></Route>   
       </Route>
     </Routes>
   </BrowserRouter>

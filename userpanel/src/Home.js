@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function Home() {
   const [doctors, setDoctors] = useState([]);
+  const [reportFile, setReportFile] = useState(null);
   useEffect(() => {
     // Fetch doctors data 
     fetchDoctors();
@@ -11,18 +12,48 @@ function Home() {
     try {
       const response = await axios.get('http://localhost:8080/doctors/');
       setDoctors(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('patientName', 'John Doe');
+      formData.append('patientEmail', 'johndoe@example.com');
+      formData.append('patientMobile', '1234567890');
+      formData.append('department', '65ebfaf25199f8891723d320');
+      formData.append('doctor', '65ec00031df04fbb0552cd13');
+      formData.append('status', 'pending');
+      formData.append('date', '2024-03-11T12:00:00');
+      
+      // Assuming you have the file object stored in a variable named 'reportFile'
+      formData.append('report', reportFile);
+      
+      const config = {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      };
+      
+      const response = await axios.post(`http://localhost:8080/appointments/`, formData, config);
+    
+      
+        // Add and Redirect to Doctor List Page
+        console.log(response.data);
+    } catch (error) {
+        console.error("Error saving doctor:", error);
+    }
+};
   return (
     <>
 
       <section id="hero" class="d-flex align-items-center">
         <div class="container">
           <h1>Welcome to Medilab</h1>
-          <h2>We are team of talented designers making websites with Bootstrap</h2>
+          <h2>Empowering Healthcare Efficiency</h2>
           <a href="#about" class="btn-get-started scrollto">Get Started</a>
         </div>
       </section>
@@ -35,11 +66,10 @@ function Home() {
                 <div class="content">
                   <h3>Why Choose Medilab?</h3>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                    Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
+                    
+Choose Medilab for unparalleled efficiency, comprehensive features, and seamless integration, ensuring streamlined operations and exceptional patient care.
                   </p>
                   <div class="text-center">
-                    <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
                   </div>
                 </div>
               </div>
@@ -223,7 +253,7 @@ function Home() {
               <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
             </div>
 
-            <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
+            <form onChange={handleSubmit} role="form" class="php-email-form" encType="multipart/form-data">
               <div class="row">
                 <div class="col-md-4 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input>
@@ -273,6 +303,14 @@ function Home() {
                 <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
               </div>
               <div class="text-center"><button type="submit">Make an Appointment</button></div>
+           
+              <label htmlFor="image">Select Image:</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    name="image"
+                                    onChange={(e) => setReportFile(e.target.files[0])}
+                                />
             </form>
 
           </div>

@@ -3,7 +3,7 @@ const { connection } = require("./configs/db");
 require("dotenv").config();
 const cors = require("cors");
 
-// const appointmentRouter = require("./routes/Appointments.Route");
+const appointmentRouter = require("./routes/Appointments.Route");
 const doctorRouter = require("./routes/Doctors.Route");
 const departmentRouter = require("./routes/Department.Route");
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/departments",departmentRouter);
-// app.use("/appointments", appointmentRouter);
+app.use("/appointments", appointmentRouter);
 app.use("/doctors", doctorRouter);
 
 app.listen(process.env.port, async () => {

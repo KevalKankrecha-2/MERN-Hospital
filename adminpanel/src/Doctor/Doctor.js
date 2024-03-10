@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
-const Department = () => {
+const Doctor = () => {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const Department = () => {
 
     return (
         <div>
-            <h2>Department Management</h2>
+            <h2>Doctor Management</h2>
             <main id="main" className="main">
                 <div className="pagetitle">
                     <h1>Doctor List</h1>
@@ -106,4 +106,4 @@ const Department = () => {
     );
 };
 
-export default Department;
+export default Doctor;
