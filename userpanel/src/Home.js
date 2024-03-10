@@ -3,10 +3,13 @@ import axios from 'axios';
 
 function Home() {
   const [doctors, setDoctors] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [reportFile, setReportFile] = useState(null);
+  const [appointments, setAppointments] = useState({});
   useEffect(() => {
     // Fetch doctors data 
     fetchDoctors();
+    fetchDepartments();
   }, []);
   const fetchDoctors = async () => {
     try {
@@ -17,39 +20,47 @@ function Home() {
     }
   };
 
+  const fetchDepartments = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/departments/');
+      setDepartments(response.data);
+    } catch (error) {
+      console.error('Error fetching doctors:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('patientName', 'John Doe');
-      formData.append('patientEmail', 'johndoe@example.com');
-      formData.append('patientMobile', '1234567890');
-      formData.append('department', '65ebfaf25199f8891723d320');
-      formData.append('doctor', '65ec00031df04fbb0552cd13');
+      formData.append('patientName', appointments.patientName);
+      formData.append('patientEmail', appointments.patientEmail);
+      formData.append('patientMobile', appointments.patientMobile);
+      formData.append('department', appointments.department);
+      formData.append('doctor', appointments.doctor);
       formData.append('status', 'pending');
-      formData.append('date', '2024-03-11T12:00:00');
-      
+      formData.append('date', appointments.date);
+
       // Assuming you have the file object stored in a variable named 'reportFile'
       formData.append('report', reportFile);
-      
+
       const config = {
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          }
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       };
-      
+
       const response = await axios.post(`http://localhost:8080/appointments/`, formData, config);
-    
-      
-        // Add and Redirect to Doctor List Page
-        console.log(response.data);
+
+
+      // Add and Redirect to Doctor List Page
+      console.log(response);
     } catch (error) {
-        console.error("Error saving doctor:", error);
+      console.error("Error saving doctor:", error);
     }
-};
+  };
   return (
     <>
-
       <section id="hero" class="d-flex align-items-center">
         <div class="container">
           <h1>Welcome to Medilab</h1>
@@ -66,8 +77,8 @@ function Home() {
                 <div class="content">
                   <h3>Why Choose Medilab?</h3>
                   <p>
-                    
-Choose Medilab for unparalleled efficiency, comprehensive features, and seamless integration, ensuring streamlined operations and exceptional patient care.
+
+                    Choose Medilab for unparalleled efficiency, comprehensive features, and seamless integration, ensuring streamlined operations and exceptional patient care.
                   </p>
                   <div class="text-center">
                   </div>
@@ -253,64 +264,82 @@ Choose Medilab for unparalleled efficiency, comprehensive features, and seamless
               <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
             </div>
 
-            <form onChange={handleSubmit} role="form" class="php-email-form" encType="multipart/form-data">
+            <form onSubmit={handleSubmit} role="form" class="php-email-form" encType="multipart/form-data">
               <div class="row">
                 <div class="col-md-4 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input>
+                  <input type="text" name="name" class="form-control" id="patientName"
+                    value={appointments.patientName || ""}
+                    onChange={(e) =>
+                      setAppointments({ ...appointments, patientName: e.target.value })
+                    } placeholder="Patient Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email"></input>
-                  <div class="validate"></div>
+                  <input type="text" name="name" class="form-control" id="patientEmail"
+                    value={appointments.patientEmail || ""}
+                    onChange={(e) =>
+                      setAppointments({ ...appointments, patientEmail: e.target.value })
+                    } placeholder="Patient Email" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input> <div class="validate"></div>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                  <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input>
-                  <div class="validate"></div>
+                  <input type="text" name="name" class="form-control" id="patientMobile"
+                    value={appointments.patientMobile || ""}
+                    onChange={(e) =>
+                      setAppointments({ ...appointments, patientMobile: e.target.value })
+                    } placeholder="Patient Mobile" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input><div class="validate"></div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-md-4 form-group mt-3">
-                  <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input>
-                  <div class="validate"></div>
+                  <input type="date" name="name" class="form-control" id="date"
+                    value={appointments.date || ""}
+                    onChange={(e) =>
+                      setAppointments({ ...appointments, date: e.target.value })
+                    } placeholder="Patient Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars"></input> <div class="validate"></div>
                 </div>
                 <div class="col-md-4 form-group mt-3">
-                  <select name="department" id="department" class="form-select">
+                  <select id="department" className="form-select" onChange={(e) => setAppointments({ ...appointments, department: e.target.value })}
+                  >
                     <option value="">Select Department</option>
-                    <option value="Department 1">Department 1</option>
-                    <option value="Department 2">Department 2</option>
-                    <option value="Department 3">Department 3</option>
+                    {/* Populate options dynamically from the fetched doctors */}
+                    {departments.map(department => (
+                      <option key={department._id} value={department._id}>{department.depName}</option>
+                    ))}
                   </select>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-4 form-group mt-3">
-                  <select name="doctor" id="doctor" class="form-select">
+                  <select name="doctor"  className="form-select" onChange={(e) => setAppointments({ ...appointments, doctor: e.target.value })}
+                  >
                     <option value="">Select Doctor</option>
-                    <option value="Doctor 1">Doctor 1</option>
-                    <option value="Doctor 2">Doctor 2</option>
-                    <option value="Doctor 3">Doctor 3</option>
+                    {/* Populate options dynamically from the fetched doctors */}
+                    {doctors.map(doctor => (
+                      <option key={doctor._id} value={doctor._id}>{doctor.docName}</option>
+                    ))}
                   </select>
                   <div class="validate"></div>
                 </div>
               </div>
 
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
-                <div class="validate"></div>
+
+                <label htmlFor="image">Select Image:</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="image"
+                  onChange={(e) => setReportFile(e.target.files[0])}
+                /> <div class="validate"></div>
               </div>
+
               <div class="mb-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
               </div>
               <div class="text-center"><button type="submit">Make an Appointment</button></div>
-           
-              <label htmlFor="image">Select Image:</label>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    name="image"
-                                    onChange={(e) => setReportFile(e.target.files[0])}
-                                />
+
             </form>
 
           </div>
@@ -425,8 +454,8 @@ Choose Medilab for unparalleled efficiency, comprehensive features, and seamless
               {doctors.map((doctor) => (
                 <div class="col-lg-6">
                   <div class="member d-flex align-items-start">
-                  <div class="pic"><img src={doctor.image} style={{ height: '100px', width: '150px' }} alt="No Profile Image">
-                                                        </img></div>
+                    <div class="pic"><img src={doctor.image} style={{ height: '100px', width: '150px' }} alt="No Profile Image">
+                    </img></div>
                     <div class="member-info">
                       <h4>{doctor.docName}</h4>
                       <span>{doctor.department.depName}</span>
