@@ -87,7 +87,7 @@ const Appointment = () => {
                                                     <td>{patient.doctor.docName}</td>
                                                     <td>{patient.date}</td>
                                                     <td>
-                                                    <button onClick={() => handleDownload(patient.report.path)}><i class="bi bi-download"></i></button>
+                                                    <button onClick={() => handleDownload(patient.report)}><i class="bi bi-download"></i></button>
                                                     </td>
                                                     <td>
                                                         {patient.status === "approved" && (
