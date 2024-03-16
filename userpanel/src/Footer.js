@@ -9,30 +9,35 @@ let Footer = () => {
 
               <div class="col-lg-3 col-md-6 footer-contact">
                 <h3>Medilab</h3>
-                <p>Demo Address </p>
+                <p>123 Hospital Street,<br></br>
+                  Citytown, State ZIP,<br></br>
+                  Country</p>
               </div>
+
 
               <div class="col-lg-2 col-md-6 footer-links">
                 <h4>Useful Links</h4>
                 <ul>
                   <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">About Us</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Our Services</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Doctors</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Contact Us</a></li>
                 </ul>
               </div>
+
 
               <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Our Services</h4>
                 <ul>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">General Check-ups</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Emergency Care</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Specialized Treatments</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Surgery</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Diagnostic Services</a></li>
                 </ul>
               </div>
+
 
               <div class="col-lg-4 col-md-6 footer-newsletter">
                 <h4>Join Our Newsletter</h4>
@@ -50,10 +55,10 @@ let Footer = () => {
 
           <div class="me-md-auto text-center text-md-start">
             <div class="copyright">
-              &copy; Copyright <strong><span>Medilab</span></strong>. All Rights Reserved
+              &copy; Copyright <strong><span></span></strong> All Rights Reserved
             </div>
             <div class="credits">
-              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+              Created by <a href="/">Isha Kankrecha</a>
             </div>
           </div>
           <div class="social-links text-center text-md-right pt-3 pt-md-0">
