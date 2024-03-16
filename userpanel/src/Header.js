@@ -24,7 +24,6 @@ let Header = () => {
               <li><a class="nav-link scrollto" href="#services">Services</a></li>
               <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
               <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
-              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav>
