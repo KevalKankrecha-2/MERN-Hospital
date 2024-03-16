@@ -55,6 +55,9 @@ function Home() {
 
       // Add and Redirect to Doctor List Page
       console.log(response);
+      alert("Appointment Booked successfully!");
+      window.location.reload();
+
     } catch (error) {
       console.error("Error saving doctor:", error);
     }
