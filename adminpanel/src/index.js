@@ -14,7 +14,7 @@ import ManageDepartment from './Department/ManageDepartment';
 
 import Appointment from './Appointment/Appointment';
 
-import Login from './Login/Login';
+import Login from './Login/LoginPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

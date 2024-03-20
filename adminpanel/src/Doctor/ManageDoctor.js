@@ -12,17 +12,29 @@ const ManageDoctor = () => {
     const fetchDoctor = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/doctors/${id}`);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setDoctor(response.data);
         } catch (error) {
             console.error('Error fetching doctor:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
     const fetchDepartments = async () => {
         try {
             const response = await axios.get('http://localhost:8080/departments/');
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setDepartments(response.data);
         } catch (error) {
             console.error('Error fetching departments:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
     useEffect(() => {
@@ -48,7 +60,8 @@ const ManageDoctor = () => {
             formData.append('details', doctor.details);
             const config = {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTA5NTczMDF9.l51ZcLni0VSEMru44hd6SD6VTkMQYXLyjGHiD6O3bVU`
                 }
             };
             if (id) {
@@ -60,6 +73,9 @@ const ManageDoctor = () => {
             navigate('/Doctor');
         } catch (error) {
             console.error("Error saving doctor:", error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 

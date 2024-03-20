@@ -1,36 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Doctor = () => {
     const [doctors, setDoctors] = useState([]);
+    const navigate = useNavigate(); // Use the useNavigate hook
 
     useEffect(() => {
         // Fetch doctors data 
         fetchDoctors();
     }, []);
 
+    const token = localStorage.getItem('key');
+    const config = {
+        headers: {
+            'authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTA5NTczMDF9.l51ZcLni0VSEMru44hd6SD6VTkMQYXLyjGHiD6O3bVU`
+        }
+    };
+
     const fetchDoctors = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/doctors/');
-          setDoctors(response.data);
+            const response = await axios.get('http://localhost:8080/doctors/', config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
+            setDoctors(response.data);
         } catch (error) {
-          console.error('Error fetching doctors:', error);
+            console.error('Error fetching doctors:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
-      };
+    };
 
-      const handleDeleteDoctor = async (id) => {
+    const handleDeleteDoctor = async (id) => {
         try {
-          const response = await axios.delete(`http://localhost:8080/doctors/${id}`);
-          if (response.status === 200) {
-            fetchDoctors(); // Refresh doctors after deleting
-          } else {
-            console.error('Failed to delete doctor');
-          }
+            const response = await axios.delete(`http://localhost:8080/doctors/${id}`, config);
+            if (response.status === 200) {
+                fetchDoctors(); // Refresh doctors after deleting
+            } else {
+                console.error('Failed to delete doctor');
+            }
         } catch (error) {
-          console.error('Error deleting doctor:', error);
+            console.error('Error deleting doctor:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
-      };
+    };
 
     return (
         <div>
@@ -58,7 +75,7 @@ const Doctor = () => {
                                     <table class="datatable table table-bordered">
                                         <thead>
                                             <tr>
-                                            <th scope="col">Doctor Name</th>
+                                                <th scope="col">Doctor Name</th>
                                                 <th scope="col">Doctor Name</th>
                                                 <th scope="col">Mobile</th>
                                                 <th scope="col">Email</th>
