@@ -14,11 +14,15 @@ import ManageDepartment from './Department/ManageDepartment';
 
 import Appointment from './Appointment/Appointment';
 
+import Login from './Login/Login';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <Routes>
+    <Routes>  {/* Login Route */}
+      <Route path="/Login" element={<Login />}></Route>
+
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />}></Route>
         {/* Department Route */}
@@ -27,12 +31,13 @@ root.render(
         <Route path="/Department/edit/:id" element={<ManageDepartment />}></Route>
 
         {/* Doctor Route */}
-        <Route path="/Doctor" element={<Doctor />}></Route>  
+        <Route path="/Doctor" element={<Doctor />}></Route>
         <Route path="/Doctor/Add" element={<ManageDoctor />}></Route>
         <Route path="/Doctor/edit/:id" element={<ManageDoctor />}></Route>
 
-          {/* Appointment Route */}
-          <Route path="/Appointment" element={<Appointment />}></Route>   
+        {/* Appointment Route */}
+        <Route path="/Appointment" element={<Appointment />}></Route>
+
       </Route>
     </Routes>
   </BrowserRouter>

@@ -11,9 +11,15 @@ function Home() {
     fetchDoctors();
     fetchDepartments();
   }, []);
+
+  const config = {
+    headers: {
+      'x-api-key': 'PiXs5kkTm5eFGjkv2qwIfuf82Bz8J6' // Add your x-api-key value here
+    }
+  };
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/doctors/');
+      const response = await axios.get('http://localhost:8080/doctors/', config);
       setDoctors(response.data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
@@ -22,7 +28,7 @@ function Home() {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/departments/');
+      const response = await axios.get('http://localhost:8080/departments/', config);
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
@@ -46,7 +52,8 @@ function Home() {
 
       const config = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'x-api-key': 'PiXs5kkTm5eFGjkv2qwIfuf82Bz8J6'
         }
       };
 
