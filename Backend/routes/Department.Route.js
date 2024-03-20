@@ -3,9 +3,11 @@ const { DepartmentModel } = require("../models/Department.model");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+const jwtAuthMiddleware = require('../middlewares/jwtauth');
+
 const router = express.Router();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id",jwtAuthMiddleware, async (req, res) => {
   try {
     const department = await DepartmentModel.findById(req.params.id);
     if (!department) {
@@ -17,7 +19,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/",jwtAuthMiddleware, async (req, res) => {
   try {
     const departments = await DepartmentModel.find();
     res.status(200).send(departments);
@@ -26,10 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-
-
-router.post("/add", async (req, res) => {
+router.post("/add",jwtAuthMiddleware, async (req, res) => {
   try {
     let Department = new DepartmentModel(req.body);
     await Department.save();
@@ -39,7 +38,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.patch("/:departmentId", async (req, res) => {
+router.patch("/:departmentId",jwtAuthMiddleware, async (req, res) => {
   const id = req.params.departmentId;
   try {
     const updatedDepartment = await DepartmentModel.findByIdAndUpdate({ _id: id }, req.body, { new: true });
@@ -50,7 +49,7 @@ router.patch("/:departmentId", async (req, res) => {
   }
 });
 
-router.delete("/:departmentId", async (req, res) => {
+router.delete("/:departmentId",jwtAuthMiddleware, async (req, res) => {
   const id = req.params.departmentId;
   try {
     const department = await DepartmentModel.findByIdAndDelete({ _id: id });

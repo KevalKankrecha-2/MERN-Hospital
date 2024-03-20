@@ -7,8 +7,10 @@ const { DoctorModel } = require("../models/Doctor.model");
 require("dotenv").config();
 const upload = require('../middlewares/fileUpload');
 
+const jwtAuthMiddleware = require('../middlewares/jwtauth');
+
 const router = express.Router();
-router.get("/:id", async (req, res) => {
+router.get("/:id", jwtAuthMiddleware, async (req, res) => {
   try {
     const doctor = await DoctorModel.findById(req.params.id).populate('department').lean();
     if (!doctor) {
@@ -31,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", jwtAuthMiddleware, async (req, res) => {
   try {
     const doctors = await DoctorModel.find().populate('department').lean();
     const finalDoctorsResponse = [];
@@ -61,7 +63,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/add", upload.single("image"), async (req, res) => {
+router.post("/add",jwtAuthMiddleware, upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
       res.status(413).send(`File not uploaded!, Please 
@@ -77,26 +79,7 @@ router.post("/add", upload.single("image"), async (req, res) => {
   }
 });
 
-// router.post("/login", async (req, res) => {
-//   const { docID, password } = req.body;
-//   try {
-//     const doctor = await DoctorModel.findOne({ docID, password });
-//     console.log(doctor);
-//     if (doctor) {
-//       const token = jwt.sign({ foo: "bar" }, process.env.key, {
-//         expiresIn: "24h",
-//       });
-//       res.send({ message: "Successful", user: doctor, token: token });
-//     } else {
-//       res.send({ message: "Wrong credentials" });
-//     }
-//   } catch (error) {
-//     console.log({ message: "Error" });
-//     console.log(error);
-//   }
-// });
-
-router.patch("/:doctorId", upload.single("image"), async (req, res) => {
+router.patch("/:doctorId",jwtAuthMiddleware, upload.single("image"), async (req, res) => {
   const id = req.params.doctorId;
   try {
     if(req.file){
@@ -110,7 +93,7 @@ router.patch("/:doctorId", upload.single("image"), async (req, res) => {
   }
 });
 
-router.delete("/:doctorId", async (req, res) => {
+router.delete("/:doctorId",jwtAuthMiddleware, async (req, res) => {
   const id = req.params.doctorId;
   try {
     const deletedDoctor = await DoctorModel.deleteOne({ _id: id });
@@ -125,7 +108,7 @@ router.delete("/:doctorId", async (req, res) => {
   }
 });
 
-router.get('/api/imageData', (req, res) => {
+router.get('/api/imageData',jwtAuthMiddleware, (req, res) => {
   const imagePath = path.join(__dirname, '../middlewares/uploads', '1709918607542-BAPSallInOne.png');
     // Read image file
     fs.readFile(imagePath, (err, imageData) => {
@@ -150,8 +133,5 @@ router.get('/api/imageData', (req, res) => {
       });
     });
 });
-
-
-
 
 module.exports = router;
