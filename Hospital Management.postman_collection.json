@@ -1,0 +1,531 @@
+{
+	"info": {
+		"_postman_id": "4fbd79a2-7d81-41e3-a149-99f05877872f",
+		"name": "Hospital Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23735027"
+	},
+	"item": [
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Add Doctor with Files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/LENOVO/Desktop/doctor.jpg"
+								},
+								{
+									"key": "docName",
+									"value": "keval",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "9078563412",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "isha@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "isha123",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "female",
+									"type": "text"
+								},
+								{
+									"key": "Expirence",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "rajkot",
+									"type": "text"
+								},
+								{
+									"key": "education",
+									"value": "BE",
+									"type": "text"
+								},
+								{
+									"key": "details",
+									"value": "xyz",
+									"type": "text"
+								},
+								{
+									"key": "department",
+									"value": "65ebfaf25199f8891723d320",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/doctors/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Doctors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "PiXs5kkTm5eFGjkv2qwIfuf82Bz8J6",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/doctors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/doctors/65ea04b7e361a858f8198f12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"65ea04b7e361a858f8198f12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Doctor by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/doctors/65ebfda73219a3f8590437af",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"65ebfda73219a3f8590437af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/doctors/65ec00031df04fbb0552cd13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"65ec00031df04fbb0552cd13"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count doctor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTEwMzg3ODd9._RpbPQ8221CHe-5g5uZVK7MSCEfpqsrtVARTSGvi9rc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/doctors/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"doctors",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "List Departments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/departments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"depName\":\"Orthopedic\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/departments/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Department By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/departments/65e9fe3a53b1fcfff1bf34dd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								"65e9fe3a53b1fcfff1bf34dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Department By ID",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"depName\":\"ou1i\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/departments/65e9fe3a53b1fcfff1bf34dd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								"65e9fe3a53b1fcfff1bf34dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Departments count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTEwMzg3ODd9._RpbPQ8221CHe-5g5uZVK7MSCEfpqsrtVARTSGvi9rc"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/departments/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointment",
+			"item": [
+				{
+					"name": "Book Appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientName",
+									"value": "John Doe",
+									"type": "text"
+								},
+								{
+									"key": "patientEmail",
+									"value": "johndoe@example.com",
+									"type": "text"
+								},
+								{
+									"key": "patientMobile",
+									"value": "1234567890",
+									"type": "text"
+								},
+								{
+									"key": "department",
+									"value": "65ebfaf25199f8891723d320",
+									"type": "text"
+								},
+								{
+									"key": "doctor",
+									"value": "65ec00031df04fbb0552cd13",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "pending",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "2024-03-11T12:00:00",
+									"type": "text"
+								},
+								{
+									"key": "report",
+									"type": "file",
+									"src": "/D:/KEVAL/Keval Kankrecha Resume.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/appointments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"rejected\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/appointments/65ed67d170a6a4e9bdaf9714",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"65ed67d170a6a4e9bdaf9714"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download File By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/appointments/download-pdf/1710060656564-Keval Kankrecha Resume.pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments",
+								"download-pdf",
+								"1710060656564-Keval Kankrecha Resume.pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count appoinements",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTEwMzg3ODd9._RpbPQ8221CHe-5g5uZVK7MSCEfpqsrtVARTSGvi9rc"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/appoinemtns/count",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appoinemtns",
+								"count"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"ishakankrecha\",\r\n    \"password\":\"yJ6.@LZ1Hewl$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
