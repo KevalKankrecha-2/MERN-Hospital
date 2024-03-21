@@ -6,22 +6,25 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
-        console.log("CHECK")
-        // e.preventDefault();
+        e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/login', {
                 username: username,
                 password: password
             });
-
-            console.log("CHECK", response);
-            // Assuming the login response contains a token
-            const token = response.data.token;
-            // Save the token to local storage
-            localStorage.setItem('authToken', token);
-            // Redirect to another page upon successful login
-            // You can replace '/dashboard' with the desired route
-            // window.location.href = '/';
+            console.log(response);
+            if (response.data.message === 'Wrong credentials') {
+                window.location.href = '/Login';
+            }
+            else {
+                // Assuming the login response contains a token
+                const token = response.data.token;
+                // Save the token to local storage
+                localStorage.setItem('authToken', token);
+                // Redirect to another page upon successful login
+                // You can replace '/dashboard' with the desired route
+                window.location.href = '/';
+            }
         } catch (error) {
             console.error('Error logging in:', error);
             // Handle login error

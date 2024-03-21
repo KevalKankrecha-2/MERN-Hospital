@@ -10,6 +10,17 @@ const upload = require('../middlewares/fileUpload');
 const jwtAuthMiddleware = require('../middlewares/jwtauth');
 
 const router = express.Router();
+
+router.get("/count", jwtAuthMiddleware, async (req, res) => {
+  try {
+    const  countDoctor = await DoctorModel.find().count();
+    res.json({ countDoctor });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 router.get("/:id", jwtAuthMiddleware, async (req, res) => {
   try {
     const doctor = await DoctorModel.findById(req.params.id).populate('department').lean();
@@ -133,5 +144,7 @@ router.get('/api/imageData',jwtAuthMiddleware, (req, res) => {
       });
     });
 });
+
+
 
 module.exports = router;

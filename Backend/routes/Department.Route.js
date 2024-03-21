@@ -7,6 +7,16 @@ const jwtAuthMiddleware = require('../middlewares/jwtauth');
 
 const router = express.Router();
 
+router.get("/count", jwtAuthMiddleware, async (req, res) => {
+  try {
+    const countDepartment = await DepartmentModel.countDocuments();
+    res.status(200).send({ countDepartment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Something went wrong" });
+  }
+});
+
 router.get("/:id",jwtAuthMiddleware, async (req, res) => {
   try {
     const department = await DepartmentModel.findById(req.params.id);

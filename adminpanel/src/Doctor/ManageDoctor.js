@@ -8,10 +8,14 @@ const ManageDoctor = () => {
     const [doctor, setDoctor] = useState({});
     const [image, setImage] = useState(null);
     const [departments, setDepartments] = useState([]);
-
+    const token = localStorage.getItem('authToken');
+    const config = {
+        headers: {
+            'authorization': token }
+    };
     const fetchDoctor = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/doctors/${id}`);
+            const response = await axios.get(`http://localhost:8080/doctors/${id}`, config);
             if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
                 navigate('/Login');
             } 
@@ -25,7 +29,7 @@ const ManageDoctor = () => {
     };
     const fetchDepartments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/departments/');
+            const response = await axios.get('http://localhost:8080/departments/', config);
             if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
                 navigate('/Login');
             } 
@@ -61,8 +65,7 @@ const ManageDoctor = () => {
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTA5NTczMDF9.l51ZcLni0VSEMru44hd6SD6VTkMQYXLyjGHiD6O3bVU`
-                }
+                    'authorization': token}
             };
             if (id) {
                 const response = await axios.patch(`http://localhost:8080/doctors/${id}`, formData, config);

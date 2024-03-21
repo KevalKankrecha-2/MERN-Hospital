@@ -1,7 +1,51 @@
 // src/ContactUs.js
-import React from 'react';
+import React, { useState, useEffect, } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Home() {
+
+  const [DoctorCount, setDoctorCount] = useState(0);
+  const [DepartmentCount, setDepartmentCount] = useState(0);
+  const [AppoinemtnCount, setAppoinemtnCount] = useState(0);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    const config = {
+      headers: {
+        'authorization': token
+      }
+    };
+    async function getDoctorCount() {
+      try {
+        const response = await axios.get('http://localhost:8080/doctors/count', config); // Assuming you have an API endpoint to fetch the count
+        setDoctorCount(response.data.countDoctor); // Assuming the count is returned as { count: 145 } in the response
+      } catch (error) {
+        console.error('Error fetching count:', error);
+      }
+    }
+    async function getDepartmentCount() {
+      try {
+        const response = await axios.get('http://localhost:8080/departments/count', config);
+        setDepartmentCount(response.data.countDepartment);
+      } catch (error) {
+        console.error('Error fetching department count:', error);
+      }
+    }
+    async function getAppoinementCount() {
+      try {
+        const response = await axios.get('http://localhost:8080/appointments/count', config);
+        setAppoinemtnCount(response.data.countAppointments);
+      } catch (error) {
+        console.error('Error fetching department count:', error);
+      }
+    }
+
+
+    getDepartmentCount();
+    getDoctorCount();
+    getAppoinementCount();
+  }, []);
   return (
     <>
       <aside id="sidebar" class="sidebar">
@@ -66,29 +110,17 @@ function Home() {
                 <div class="col-xxl-4 col-md-6">
                   <div class="card info-card sales-card">
 
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                      </ul>
-                    </div>
+                    
 
                     <div class="card-body">
-                      <h5 class="card-title">Departments <span>| Today</span></h5>
+                      <h5 class="card-title">Departments</h5>
 
                       <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                           <i class="bi bi-cart"></i>
                         </div>
                         <div class="ps-3">
-                          <h6>145</h6>
-                          <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                          <h6>{DoctorCount}</h6>
 
                         </div>
                       </div>
@@ -99,29 +131,17 @@ function Home() {
                 <div class="col-xxl-4 col-md-6">
                   <div class="card info-card revenue-card">
 
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                      </ul>
-                    </div>
+                   
 
                     <div class="card-body">
-                      <h5 class="card-title">Doctors <span>| This Month</span></h5>
+                      <h5 class="card-title">Doctors </h5>
 
                       <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                           <i class="bi bi-currency-dollar"></i>
                         </div>
                         <div class="ps-3">
-                          <h6>$3,264</h6>
-                          <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                          <h6>{DepartmentCount}</h6>
 
                         </div>
                       </div>
@@ -133,30 +153,17 @@ function Home() {
 
                   <div class="card info-card customers-card">
 
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                      </ul>
-                    </div>
+                   
 
                     <div class="card-body">
-                      <h5 class="card-title">Patients <span>| This Year</span></h5>
+                      <h5 class="card-title">Patients </h5>
 
                       <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                           <i class="bi bi-people"></i>
                         </div>
                         <div class="ps-3">
-                          <h6>1244</h6>
-                          <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
-
+                          <h6>{AppoinemtnCount}</h6>
                         </div>
                       </div>
 
@@ -167,30 +174,10 @@ function Home() {
                 <div class="col-12">
                   <div class="card">
 
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Filter</h6>
-                        </li>
-
-                        <li><a class="dropdown-item" href="#">Today</a></li>
-                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                      </ul>
-                    </div>
-
-                    <div class="card-body">
-                      <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                      <div id="reportsChart"></div>
-
-
-                    </div>
-
+                
                   </div>
                 </div>
-      
+
               </div>
             </div>
 

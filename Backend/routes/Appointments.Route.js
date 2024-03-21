@@ -11,6 +11,17 @@ const AppointmentStatus = require('../AppointmentStatus');
 
 const upload = require('../middlewares/fileUpload');
 
+
+router.get('/count', jwtAuthMiddleware, async (req, res) => {
+    try {
+        const countAppointments = await Appointment.countDocuments();
+        res.status(200).json({ countAppointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+});
+
 // Create an appointment with file upload
 router.post('/',jwtAuthMiddleware, upload.single("report"), async (req, res) => {
     try {

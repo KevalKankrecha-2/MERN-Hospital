@@ -7,10 +7,14 @@ const ManageDepartment = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [department, setDepartment] = useState({});
-
+  const token = localStorage.getItem('authToken');
+  const config = {
+      headers: {
+          'authorization': token }
+  };
   useEffect(() => {
     if (id) {
-      axios.get(`http://localhost:8080/departments/${id}`)
+      axios.get(`http://localhost:8080/departments/${id}`, config)
         .then((response) => {
           setDepartment(response.data);
         })
@@ -20,13 +24,13 @@ const ManageDepartment = () => {
     }
   }, [id]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'authorization': token
         }
       }
       if (id) {
@@ -40,8 +44,6 @@ const ManageDepartment = () => {
       console.error('Error saving department:', error);
     }
   };
-  
-
   return (
     <>
       <aside id="sidebar" className="sidebar">
