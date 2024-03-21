@@ -48,49 +48,7 @@ function Home() {
   }, []);
   return (
     <>
-      <aside id="sidebar" class="sidebar">
-
-        <ul class="sidebar-nav" id="sidebar-nav">
-
-          <li class="nav-item">
-            <a class="nav-link " href="index.html">
-              <i class="bi bi-grid"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="/Department">
-              <i class="bi bi-menu-button-wide"></i><span>Departments</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="/Doctor">
-              <i class="bi bi-journal-text"></i><span>Doctors</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-              <i class="bi bi-layout-text-window-reverse"></i><span>Patients</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-              <i class="bi bi-bar-chart"></i><span>Appointments</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-          </li>
-
-
-
-
-
-        </ul>
-
-      </aside>
-
       <main id="main" class="main">
-
         <div class="pagetitle">
           <h1>Dashboard</h1>
           <nav>
@@ -109,9 +67,6 @@ function Home() {
 
                 <div class="col-xxl-4 col-md-6">
                   <div class="card info-card sales-card">
-
-                    
-
                     <div class="card-body">
                       <h5 class="card-title">Departments</h5>
 

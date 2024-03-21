@@ -10,12 +10,10 @@ const Appointment = () => {
         fetchAppointments();
     }, []);
 
-
-    const token = localStorage.getItem('key');
+    const token = localStorage.getItem('authToken');
     const config = {
         headers: {
-            'authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTA5NTczMDF9.l51ZcLni0VSEMru44hd6SD6VTkMQYXLyjGHiD6O3bVU`
-        }
+            'authorization': token }
     };
 
     const fetchAppointments = async () => {
