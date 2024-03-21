@@ -1,25 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Appointment = () => {
     const [patients, setPatients] = useState([]);
+    const navigate = useNavigate(); // Use the useNavigate hook
 
     useEffect(() => {
         fetchAppointments();
     }, []);
 
+    const token = localStorage.getItem('authToken');
+    const config = {
+        headers: {
+            'authorization': token }
+    };
+
     const fetchAppointments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/appointments/');
+            const response = await axios.get('http://localhost:8080/appointments/', config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setPatients(response.data);
         } catch (error) {
             console.error('Error fetching patients:', error);
+            if (error.response?.status && (error.response?.status === 403 || error.response?.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 
     const handleStatusChange = async (id, status) => {
         try {
-            const response = await axios.patch(`http://localhost:8080/appointments/${id}`, { status });
+            const response = await axios.patch(`http://localhost:8080/appointments/${id}`, { status }, config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             if (response.status === 200) {
                 fetchAppointments();
             } else {
@@ -27,13 +44,17 @@ const Appointment = () => {
             }
         } catch (error) {
             console.error('Error updating appointment status:', error);
+            if (error.response?.status && (error.response?.status === 403 || error.response?.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 
    const handleDownload = async (file) => {
         try {
           const response = await axios.get(`http://localhost:8080/appointments//download-pdf/${file.split('uploads\\')[1]}`, {
-            responseType: 'blob' // set response type to blob for downloading files
+            responseType: 'blob', // set response type to blob for downloading files
+            'authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY1NmYyOWZjMTNhZTBkNTE1MGZiMDAiLCJ1c2VybmFtZSI6ImlzaGFrYW5rcmVjaGEiLCJwYXNzd29yZCI6InlKNi5ATFoxSGV3bCQiLCJpYXQiOjE3MTA5NTczMDF9.l51ZcLni0VSEMru44hd6SD6VTkMQYXLyjGHiD6O3bVU`
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
@@ -43,6 +64,9 @@ const Appointment = () => {
           link.click();
         } catch (error) {
           console.error('Error downloading file:', error);
+          if (error.response?.status && (error.response?.status === 403 || error.response?.status === 401)) {
+            navigate('/Login');
+        } 
         }
       }
 

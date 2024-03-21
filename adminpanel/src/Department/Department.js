@@ -1,27 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Department = () => {
     const [departments, setDepartments] = useState([]);
+    const navigate = useNavigate(); // Use the useNavigate hook
 
     useEffect(() => {
         // Fetch departments data 
         fetchDepartments();
     }, []);
 
+    const token = localStorage.getItem('authToken');
+    const config = {
+        headers: {
+            'authorization': token }
+    };
     const fetchDepartments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/departments/');
+            const response = await axios.get('http://localhost:8080/departments/', config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setDepartments(response.data);
         } catch (error) {
             console.error('Error fetching departments:', error);
+            if (error.response?.status && (error.response?.status === 403 || error.response?.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 
     const handleDeleteDepartment = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/departments/${id}`);
+            const response = await axios.delete(`http://localhost:8080/departments/${id}`, config);
             if (response.status === 200) {
                 fetchDepartments(); // Refresh departments after deleting
             } else {
@@ -29,6 +41,9 @@ const Department = () => {
             }
         } catch (error) {
             console.error('Error deleting department:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 

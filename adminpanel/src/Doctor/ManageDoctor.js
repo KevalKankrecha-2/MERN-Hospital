@@ -8,21 +8,37 @@ const ManageDoctor = () => {
     const [doctor, setDoctor] = useState({});
     const [image, setImage] = useState(null);
     const [departments, setDepartments] = useState([]);
-
+    const token = localStorage.getItem('authToken');
+    const config = {
+        headers: {
+            'authorization': token }
+    };
     const fetchDoctor = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/doctors/${id}`);
+            const response = await axios.get(`http://localhost:8080/doctors/${id}`, config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setDoctor(response.data);
         } catch (error) {
             console.error('Error fetching doctor:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
     const fetchDepartments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/departments/');
+            const response = await axios.get('http://localhost:8080/departments/', config);
+            if (response.response?.status && (response.response?.status === 403 || response.response?.status === 401)) {
+                navigate('/Login');
+            } 
             setDepartments(response.data);
         } catch (error) {
             console.error('Error fetching departments:', error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
     useEffect(() => {
@@ -48,8 +64,8 @@ const ManageDoctor = () => {
             formData.append('details', doctor.details);
             const config = {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                    'authorization': token}
             };
             if (id) {
                 const response = await axios.patch(`http://localhost:8080/doctors/${id}`, formData, config);
@@ -60,6 +76,9 @@ const ManageDoctor = () => {
             navigate('/Doctor');
         } catch (error) {
             console.error("Error saving doctor:", error);
+            if (error.response.status && (error.response.status === 403 || error.response.status === 401)) {
+                navigate('/Login');
+            } 
         }
     };
 

@@ -5,12 +5,25 @@ const path = require('path');
 const multer = require('multer');
 const Appointment = require('../models/Appointment.model');
 
+const jwtAuthMiddleware = require('../middlewares/jwtauth');
+
 const AppointmentStatus = require('../AppointmentStatus');
 
 const upload = require('../middlewares/fileUpload');
 
+
+router.get('/count', jwtAuthMiddleware, async (req, res) => {
+    try {
+        const countAppointments = await Appointment.countDocuments();
+        res.status(200).json({ countAppointments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+});
+
 // Create an appointment with file upload
-router.post('/', upload.single("report"), async (req, res) => {
+router.post('/',jwtAuthMiddleware, upload.single("report"), async (req, res) => {
     try {
         const { patientName, patientEmail, patientMobile, department, doctor, date, status } = req.body;
         const appointment = new Appointment({
@@ -31,7 +44,7 @@ router.post('/', upload.single("report"), async (req, res) => {
 });
 
 // Get all appointments
-router.get('/', async (req, res) => {
+router.get('/',jwtAuthMiddleware, async (req, res) => {
     try {
         const appointments = await Appointment.find()
             .populate('department', 'depName')
@@ -47,7 +60,7 @@ router.get('/', async (req, res) => {
 });
 
 // Define a route to serve PDF files
-router.get('/download-pdf/:filename', (req, res) => {
+router.get('/download-pdf/:filename',jwtAuthMiddleware, (req, res) => {
     const { filename } = req.params;
     const pdfFilePath = path.join(__dirname, '../middlewares/uploads', filename);
   
@@ -66,7 +79,7 @@ router.get('/download-pdf/:filename', (req, res) => {
 });
 
 // Get appointment by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id',jwtAuthMiddleware, async (req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id);
         if (!appointment) {
@@ -79,7 +92,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update an appointment status by ID
-router.patch('/:id', async (req, res) => {
+router.patch('/:id',jwtAuthMiddleware, async (req, res) => {
     try {
         const { status } = req.body;
 
@@ -105,7 +118,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 // Delete an appointment by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',jwtAuthMiddleware, async (req, res) => {
     try {
         const appointment = await Appointment.findByIdAndDelete(req.params.id);
         if (!appointment) {
